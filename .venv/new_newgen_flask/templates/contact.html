@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'fragments/header.html' %}
+    <title>{{ app_name }} - Contact</title>
+</head>
+<body class="{{ theme_class }}">
+
+<!-- Background Animation -->
+<div class="vertex-animation-bg" id="vertexBg"></div>
+
+<!-- Navbar -->
+{% include 'fragments/navbar.html' %}
+
+<div class="page-hero">
+    <div class="container">
+        <h1 class="display-3 fw-bold">Contact Us</h1>
+        <p class="lead fs-3">Get in Touch with NEC NewGen</p>
+    </div>
+</div>
+
+<div class="content-section">
+    <div class="container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show">
+                        <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'error' %}exclamation-triangle{% else %}info-circle{% endif %} me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="row">
+            <div class="col-lg-8 mb-4">
+                <div class="contact-card">
+                    <h3 class="text-gold mb-4">Send us a Message</h3>
+                    <form action="{{ url_for('contact') }}" method="post">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Your Name</label>
+                                <input type="text" id="name" name="name" class="form-control"
+                                       placeholder="Enter your name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" id="email" name="email" class="form-control"
+                                       placeholder="Enter your email" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea id="message" name="message" class="form-control"
+                                      rows="6" placeholder="Enter your message..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-gold">
+                            <i class="fas fa-paper-plane me-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="contact-info">
+                    <h4 class="text-gold mb-4">Contact Information</h4>
+                    
+                    <div class="mb-4">
+                        <h6 class="text-gold"><i class="fas fa-map-marker-alt me-2"></i>Address</h6>
+                        <p>National Engineering College<br>
+                            K.R. Nagar, Kovilpatti<br>
+                            Tamil Nadu - 628503</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6 class="text-gold"><i class="fas fa-phone me-2"></i>Phone</h6>
+                        <p>+91-4634-123456<br>+91-4634-123457</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6 class="text-gold"><i class="fas fa-envelope me-2"></i>Email</h6>
+                        <p>info@nec.edu.in<br>admissions@nec.edu.in</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h6 class="text-gold"><i class="fas fa-clock me-2"></i>Office Hours</h6>
+                        <p>Monday - Friday: 9:00 AM - 5:00 PM<br>Saturday: 9:00 AM - 1:00 PM</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h6 class="text-gold"><i class="fas fa-map-marked-alt me-2"></i>Location</h6>
+                        <div class="mt-2">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3931.234567890123!2d77.87654321!3d9.123456789!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwMDcnMjguNCJOIDc3wrA1MiczOC4xIkU!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin" 
+                                width="100%" 
+                                height="200" 
+                                style="border:0; border-radius: 10px;" 
+                                allowfullscreen="" 
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Contact Sections -->
+        <div class="row mt-5">
+            <div class="col-md-4 mb-4">
+                <div class="contact-card text-center">
+                    <div class="service-icon">🏢</div>
+                    <h4>Administration Office</h4>
+                    <p>For general inquiries and administrative matters</p>
+                    <p class="text-gold">admin@nec.edu.in</p>
+                    <p>+91-4634-123458</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="contact-card text-center">
+                    <div class="service-icon">🎓</div>
+                    <h4>Admissions</h4>
+                    <p>For admission-related queries and guidance</p>
+                    <p class="text-gold">admissions@nec.edu.in</p>
+                    <p>+91-4634-123459</p>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="contact-card text-center">
+                    <div class="service-icon">🔧</div>
+                    <h4>Technical Support</h4>
+                    <p>For technical issues and IT support</p>
+                    <p class="text-gold">support@nec.edu.in</p>
+                    <p>+91-4634-123460</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+{% include 'fragments/footer.html' %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Form validation
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            const requiredFields = form.querySelectorAll('[required]');
+            let valid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    valid = false;
+                    field.classList.add('is-invalid');
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+
+            if (!valid) {
+                e.preventDefault();
+                // Scroll to first invalid field
+                const firstInvalid = form.querySelector('.is-invalid');
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstInvalid.focus();
+                }
+            }
+        });
+
+        // Auto-hide flash messages after 5 seconds
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            }, 5000);
+        });
+    });
+</script>
+</body>
+</html>

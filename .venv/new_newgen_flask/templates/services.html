@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'fragments/header.html' %}
+    <title>{{ app_name }} - Services</title>
+</head>
+<body class="{{ theme_class }}">
+
+<!-- Background Animation -->
+<div class="vertex-animation-bg" id="vertexBg"></div>
+
+<!-- Navbar -->
+{% include 'fragments/navbar.html' %}
+
+<div class="page-hero">
+    <div class="container">
+        <h1 class="display-3 fw-bold">Our Services</h1>
+        <p class="lead fs-3">Comprehensive Technology Solutions & Educational Programs</p>
+    </div>
+</div>
+
+<div class="content-section">
+    <div class="container">
+        <!-- Academic Programs -->
+        <div class="row mb-5">
+            <div class="col-12 text-center mb-5">
+                <h2 class="text-gold display-5 fw-bold">Academic Programs</h2>
+                <p class="fs-4">Undergraduate and Postgraduate Engineering Programs</p>
+            </div>
+
+            <!-- CSE Department -->
+            <div class="col-lg-6 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3>Computer Science & Engineering (CSE)</h3>
+                    <p>Comprehensive program covering algorithms, data structures, software engineering, computer networks, and emerging technologies. Focus on developing innovative software solutions and systems.</p>
+                    <div class="mt-3">
+                        <span class="department-badge">B.E. CSE</span>
+                        <span class="department-badge">M.E. CSE</span>
+                        <span class="department-badge">Ph.D. CSE</span>
+                    </div>
+                    <div class="tech-stack">
+                        <h6 class="text-gold">Core Technologies:</h6>
+                        <span class="tech-item">Java</span>
+                        <span class="tech-item">Python</span>
+                        <span class="tech-item">C++</span>
+                        <span class="tech-item">Data Structures</span>
+                        <span class="tech-item">Algorithms</span>
+                        <span class="tech-item">DBMS</span>
+                        <span class="tech-item">Computer Networks</span>
+                        <span class="tech-item">OS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IT Department -->
+            <div class="col-lg-6 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>Information Technology (IT)</h3>
+                    <p>Advanced training in software engineering, web technologies, database management, networking, and cybersecurity. Focus on developing robust IT solutions and enterprise applications.</p>
+                    <div class="mt-3">
+                        <span class="department-badge">B.Tech IT</span>
+                        <span class="department-badge">M.Tech IT</span>
+                        <span class="department-badge">Ph.D. IT</span>
+                    </div>
+                    <div class="tech-stack">
+                        <h6 class="text-gold">Core Technologies:</h6>
+                        <span class="tech-item">Spring Boot</span>
+                        <span class="tech-item">React</span>
+                        <span class="tech-item">Angular</span>
+                        <span class="tech-item">MySQL</span>
+                        <span class="tech-item">MongoDB</span>
+                        <span class="tech-item">Cybersecurity</span>
+                        <span class="tech-item">Cloud Computing</span>
+                        <span class="tech-item">DevOps</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AIDS Department -->
+            <div class="col-lg-6 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">🤖</div>
+                    <h3>Artificial Intelligence & Data Science (AIDS)</h3>
+                    <p>Comprehensive program covering artificial intelligence, machine learning, deep learning, data analytics, and big data technologies. Prepare for careers in AI research and data science.</p>
+                    <div class="mt-3">
+                        <span class="department-badge">B.Tech AIDS</span>
+                        <span class="department-badge">M.Tech AI</span>
+                        <span class="department-badge">Ph.D. Research</span>
+                    </div>
+                    <div class="tech-stack">
+                        <h6 class="text-gold">Core Technologies:</h6>
+                        <span class="tech-item">Python</span>
+                        <span class="tech-item">TensorFlow</span>
+                        <span class="tech-item">PyTorch</span>
+                        <span class="tech-item">Machine Learning</span>
+                        <span class="tech-item">Deep Learning</span>
+                        <span class="tech-item">Data Analytics</span>
+                        <span class="tech-item">Big Data</span>
+                        <span class="tech-item">NLP</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ECE Department -->
+            <div class="col-lg-6 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">📡</div>
+                    <h3>Electronics & Communication Engineering (ECE)</h3>
+                    <p>Advanced training in embedded systems, VLSI design, communication networks, signal processing, and IoT technologies. Focus on electronic systems and communication technologies.</p>
+                    <div class="mt-3">
+                        <span class="department-badge">B.E. ECE</span>
+                        <span class="department-badge">M.E. VLSI</span>
+                        <span class="department-badge">M.E. Communication</span>
+                        <span class="department-badge">Ph.D.</span>
+                    </div>
+                    <div class="tech-stack">
+                        <h6 class="text-gold">Core Technologies:</h6>
+                        <span class="tech-item">Embedded Systems</span>
+                        <span class="tech-item">VLSI Design</span>
+                        <span class="tech-item">Digital Signal Processing</span>
+                        <span class="tech-item">IoT</span>
+                        <span class="tech-item">Communication Systems</span>
+                        <span class="tech-item">MATLAB</span>
+                        <span class="tech-item">Verilog</span>
+                        <span class="tech-item">PCB Design</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EEE Department -->
+            <div class="col-lg-6 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Electrical & Electronics Engineering (EEE)</h3>
+                    <p>Focus on power systems, control systems, renewable energy, electrical machine design, and power electronics. Prepare for careers in energy sector and electrical systems.</p>
+                    <div class="mt-3">
+                        <span class="department-badge">B.E. EEE</span>
+                        <span class="department-badge">M.E. Power Systems</span>
+                        <span class="department-badge">M.E. Control Systems</span>
+                        <span class="department-badge">Ph.D.</span>
+                    </div>
+                    <div class="tech-stack">
+                        <h6 class="text-gold">Core Technologies:</h6>
+                        <span class="tech-item">Power Systems</span>
+                        <span class="tech-item">Control Systems</span>
+                        <span class="tech-item">Renewable Energy</span>
+                        <span class="tech-item">Electrical Machines</span>
+                        <span class="tech-item">Power Electronics</span>
+                        <span class="tech-item">MATLAB/Simulink</span>
+                        <span class="tech-item">PLC Programming</span>
+                        <span class="tech-item">Smart Grid</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mechanical Engineering -->
+            <div class="col-lg-6 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">⚙️</div>
+                    <h3>Mechanical Engineering (MECH)</h3>
+                    <p>Comprehensive program in mechanical design, thermal engineering, manufacturing processes, robotics, and automation. Focus on product development and advanced manufacturing.</p>
+                    <div class="mt-3">
+                        <span class="department-badge">B.E. Mechanical</span>
+                        <span class="department-badge">M.E. Design</span>
+                        <span class="department-badge">M.E. Thermal</span>
+                        <span class="department-badge">Ph.D.</span>
+                    </div>
+                    <div class="tech-stack">
+                        <h6 class="text-gold">Core Technologies:</h6>
+                        <span class="tech-item">CAD/CAM</span>
+                        <span class="tech-item">SolidWorks</span>
+                        <span class="tech-item">ANSYS</span>
+                        <span class="tech-item">Robotics</span>
+                        <span class="tech-item">Automation</span>
+                        <span class="tech-item">3D Printing</span>
+                        <span class="tech-item">IoT</span>
+                        <span class="tech-item">CNC Programming</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Civil Engineering -->
+            <div class="col-lg-6 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">🏗️</div>
+                    <h3>Civil Engineering (CIVIL)</h3>
+                    <p>Advanced training in structural engineering, construction technology, environmental engineering, transportation, and geotechnical engineering. Focus on sustainable infrastructure.</p>
+                    <div class="mt-3">
+                        <span class="department-badge">B.E. Civil</span>
+                        <span class="department-badge">M.E. Structural</span>
+                        <span class="department-badge">M.E. Environmental</span>
+                        <span class="department-badge">Ph.D.</span>
+                    </div>
+                    <div class="tech-stack">
+                        <h6 class="text-gold">Core Technologies:</h6>
+                        <span class="tech-item">AutoCAD</span>
+                        <span class="tech-item">STAAD Pro</span>
+                        <span class="tech-item">Revit</span>
+                        <span class="tech-item">GIS</span>
+                        <span class="tech-item">BIM</span>
+                        <span class="tech-item">ETABS</span>
+                        <span class="tech-item">SAP2000</span>
+                        <span class="tech-item">Project Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technology Services -->
+        <div class="row mb-5">
+            <div class="col-12 text-center mb-5">
+                <h2 class="text-gold display-5 fw-bold">Technology Services</h2>
+                <p class="fs-4">Industry-Ready Solutions & Research Services</p>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>Web & Mobile Development</h3>
+                    <p>Custom web applications using modern technologies like Spring Boot, React, Angular, and mobile app development for iOS and Android platforms.</p>
+                    <ul class="mt-3">
+                        <li>Enterprise Web Applications</li>
+                        <li>E-commerce Solutions</li>
+                        <li>Mobile App Development</li>
+                        <li>Progressive Web Apps</li>
+                        <li>Cross-platform Solutions</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-item">Spring Boot</span>
+                        <span class="tech-item">React</span>
+                        <span class="tech-item">Angular</span>
+                        <span class="tech-item">Flutter</span>
+                        <span class="tech-item">React Native</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">🔗</div>
+                    <h3>API & Microservices</h3>
+                    <p>RESTful APIs with Spring Boot and microservices architecture. We create robust backend systems that power your applications and integrations.</p>
+                    <ul class="mt-3">
+                        <li>REST API Development</li>
+                        <li>Microservices Architecture</li>
+                        <li>API Security & Documentation</li>
+                        <li>System Integration</li>
+                        <li>Cloud-native Applications</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-item">Spring Cloud</span>
+                        <span class="tech-item">Docker</span>
+                        <span class="tech-item">Kubernetes</span>
+                        <span class="tech-item">Swagger</span>
+                        <span class="tech-item">OAuth2</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">🗄️</div>
+                    <h3>Database Solutions</h3>
+                    <p>Optimized database schemas and queries using PostgreSQL, MySQL, MongoDB, and other modern database technologies.</p>
+                    <ul class="mt-3">
+                        <li>Database Design & Optimization</li>
+                        <li>Data Migration Services</li>
+                        <li>Big Data Solutions</li>
+                        <li>Data Analytics & Reporting</li>
+                        <li>Real-time Data Processing</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-item">PostgreSQL</span>
+                        <span class="tech-item">MySQL</span>
+                        <span class="tech-item">MongoDB</span>
+                        <span class="tech-item">Redis</span>
+                        <span class="tech-item">Apache Spark</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">☁️</div>
+                    <h3>Cloud & DevOps</h3>
+                    <p>Deployment to cloud platforms like AWS, Azure, and Google Cloud. We help you leverage cloud technologies for scalability and reliability.</p>
+                    <ul class="mt-3">
+                        <li>Cloud Infrastructure Setup</li>
+                        <li>CI/CD Pipeline Implementation</li>
+                        <li>Containerization with Docker</li>
+                        <li>Kubernetes Orchestration</li>
+                        <li>Infrastructure as Code</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-item">AWS</span>
+                        <span class="tech-item">Azure</span>
+                        <span class="tech-item">Google Cloud</span>
+                        <span class="tech-item">Docker</span>
+                        <span class="tech-item">Kubernetes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Research & Innovation -->
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="text-gold display-5 fw-bold">Research & Innovation</h2>
+                <p class="fs-4">Cutting-Edge Research Centers & Labs</p>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center">
+                    <div class="service-icon">🤖</div>
+                    <h4>AI & ML Research Center</h4>
+                    <p>Advanced research in artificial intelligence, machine learning, and deep learning applications for real-world problems.</p>
+                    <div class="tech-stack">
+                        <span class="tech-item">Computer Vision</span>
+                        <span class="tech-item">NLP</span>
+                        <span class="tech-item">Reinforcement Learning</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center">
+                    <div class="service-icon">🌐</div>
+                    <h4>IoT Innovation Lab</h4>
+                    <p>Research and development in Internet of Things, sensor networks, and smart systems for industrial and domestic applications.</p>
+                    <div class="tech-stack">
+                        <span class="tech-item">Arduino</span>
+                        <span class="tech-item">Raspberry Pi</span>
+                        <span class="tech-item">Sensor Networks</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center">
+                    <div class="service-icon">🔒</div>
+                    <h4>Cyber Security Center</h4>
+                    <p>Advanced security research, threat analysis, and secure system development for enterprise applications.</p>
+                    <div class="tech-stack">
+                        <span class="tech-item">Ethical Hacking</span>
+                        <span class="tech-item">Cryptography</span>
+                        <span class="tech-item">Network Security</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action -->
+<div class="content-section">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h3 class="mb-4 text-gold">Interested in our programs or services?</h3>
+                <p class="fs-5 mb-4">Join NEC NewGen and be part of the next generation of technology innovators!</p>
+                <a href="{{ url_for('contact') }}" class="btn-gold btn-lg">Get In Touch</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+{% include 'fragments/footer.html' %}
+</body>
+</html>

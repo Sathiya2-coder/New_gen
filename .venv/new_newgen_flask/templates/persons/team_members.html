@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'fragments/header.html' %}
+    <title>{{ app_name }} - {{ team.name }} Team</title>
+    <style>
+        .team-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .theme-light .team-card {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 31, 63, 0.2);
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-image {
+            font-size: 4rem;
+            line-height: 1;
+            margin-bottom: 1rem;
+            color: var(--nec-gold);
+        }
+
+        .team-card h5 {
+            color: var(--nec-gold);
+            margin-bottom: 0.5rem;
+        }
+
+        .theme-light .team-card h5 {
+            color: var(--nec-blue);
+        }
+
+        .team-role {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .team-contact, .team-phone {
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .badge-active {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .badge-inactive {
+            background: linear-gradient(135deg, #dc3545, #e83e8c);
+            color: white;
+        }
+
+        .badge-leave {
+            background: linear-gradient(135deg, #ffc107, #fd7e14);
+            color: black;
+        }
+
+        .empty-state {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px dashed rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .theme-light .empty-state {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px dashed rgba(0, 31, 63, 0.2);
+        }
+    </style>
+</head>
+<body class="{{ theme_class }}">
+
+<!-- Background Animation -->
+<div class="vertex-animation-bg" id="vertexBg"></div>
+
+<!-- Navigation -->
+{% include 'fragments/navbar.html' %}
+
+<div class="page-hero">
+    <div class="container">
+        <h1 class="display-3 fw-bold">{{ team.name }} Team</h1>
+        <p class="lead fs-3">{{ team.description }}</p>
+        {% if team.team_lead %}
+        <p class="fs-5">Team Lead: <span class="text-gold">{{ team.team_lead }}</span></p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="content-section">
+    <div class="container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show">
+                        <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'error' %}exclamation-triangle{% else %}info-circle{% endif %} me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <a href="{{ url_for('list_persons') }}" class="btn-gold">
+                    <i class="fas fa-arrow-left me-2"></i>Back to All Members
+                </a>
+            </div>
+        </div>
+
+        {% if members %}
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="text-gold">Team Members</h2>
+                <p class="fs-5">Total Active Members: {{ members|length }}</p>
+            </div>
+
+            {% for member in members %}
+            {% if member.status == 'Active' %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="team-card">
+                    <div class="team-image">{{ team.icon }}</div>
+                    <h5>{{ member.first_name }} {{ member.last_name }}</h5>
+                    <p class="team-role">{{ member.role or 'Team Member' }}</p>
+                    <p class="team-details">{{ member.department or 'NEC' }}</p>
+                    <p class="team-contact">📧 {{ member.email }}</p>
+                    {% if member.phone %}
+                    <p class="team-phone">📞 {{ member.phone }}</p>
+                    {% endif %}
+                    <div class="mt-2">
+                        {% if member.status == 'Active' %}
+                        <span class="badge badge-active">{{ member.status }}</span>
+                        {% elif member.status == 'Inactive' %}
+                        <span class="badge badge-inactive">{{ member.status }}</span>
+                        {% elif member.status == 'On Leave' %}
+                        <span class="badge badge-leave">{{ member.status }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="mt-3">
+                        <small class="text-muted">
+                            Joined: {{ member.join_date.strftime('%d-%b-%Y') if member.join_date else 'N/A' }}
+                        </small>
+                    </div>
+                    {% if current_user.is_authenticated %}
+                    <div class="mt-3">
+                        <a href="{{ url_for('edit_person', person_id=member.id) }}" class="btn btn-warning btn-sm me-1">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <i class="fas fa-users fs-1 text-gold mb-3"></i>
+            <h4 class="text-gold">No Active Members in This Team</h4>
+            <p class="mb-4">This team doesn't have any active members yet.</p>
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('add_person') }}" class="btn-gold">
+                <i class="fas fa-user-plus me-2"></i>Add Team Member
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Team Statistics -->
+        {% if members %}
+        <div class="row mt-5 pt-5 border-top border-gold">
+            <div class="col-12 text-center mb-4">
+                <h3 class="text-gold">Team Statistics</h3>
+            </div>
+            <div class="col-md-3 col-6 text-center">
+                <div class="stats-number">{{ members|length }}</div>
+                <div class="stats-label">Active Members</div>
+            </div>
+            <div class="col-md-3 col-6 text-center">
+                <div class="stats-number">
+                    {{ members|selectattr('role', 'defined')|selectattr('role', 'equalto', 'Student Lead')|list|length }}
+                </div>
+                <div class="stats-label">Team Leads</div>
+            </div>
+            <div class="col-md-3 col-6 text-center">
+                <div class="stats-number">
+                    {{ members|selectattr('department', 'defined')|map(attribute='department')|unique|list|length }}
+                </div>
+                <div class="stats-label">Departments</div>
+            </div>
+            <div class="col-md-3 col-6 text-center">
+                <div class="stats-number">
+                    {{ members|selectattr('join_date', 'defined')|sort(attribute='join_date')|first|attr('join_date')|default('N/A', true) }}
+                </div>
+                <div class="stats-label">Oldest Member</div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Footer -->
+{% include 'fragments/footer.html' %}
+
+<script>
+    // Auto-hide flash messages after 5 seconds
+    document.addEventListener('DOMContentLoaded', function() {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            }, 5000);
+        });
+    });
+</script>
+</body>
+</html>

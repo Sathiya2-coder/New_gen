@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'fragments/header.html' %}
+    <title>{{ app_name }} - Add Team</title>
+</head>
+<body class="{{ theme_class }}">
+
+<!-- Background Animation -->
+{% include 'fragments/animation.html' %}
+
+<!-- Navbar -->
+{% include 'fragments/navbar.html' %}
+
+<div class="page-hero">
+    <div class="container">
+        <h1 class="display-3 fw-bold">Create New Team</h1>
+        <p class="lead fs-3">Add a New Department or Team</p>
+    </div>
+</div>
+
+<div class="content-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="info-card">
+                    <form method="POST" action="{{ url_for('add_team') }}">
+                        <div class="mb-3">
+                            <label for="name" class="form-label text-gold">Team Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="name" name="name" required placeholder="e.g., Software Development">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label text-gold">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="4" placeholder="Describe the team's purpose and responsibilities"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="icon" class="form-label text-gold">Icon (FontAwesome class)</label>
+                            <input type="text" class="form-control" id="icon" name="icon" placeholder="e.g., fa-code">
+                            <small class="text-muted">Use FontAwesome icon classes (e.g., fa-code, fa-chart-line, fa-database)</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="teamLead" class="form-label text-gold">Team Lead</label>
+                            <input type="text" class="form-control" id="teamLead" name="teamLead" placeholder="Name of the team lead">
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn-gold btn-lg">Create Team</button>
+                            <a href="{{ url_for('list_teams') }}" class="btn btn-outline-gold btn-lg">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center py-5">
+    <a href="{{ url_for('list_teams') }}" class="btn-gold btn-lg">Back to Teams</a>
+</div>
+
+<!-- Footer -->
+{% include 'fragments/footer.html' %}
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'fragments/header.html' %}
+    <title>{{ app_name }} - {{ team.name }}</title>
+</head>
+<body class="{{ theme_class }}">
+
+<!-- Background Animation -->
+{% include 'fragments/animation.html' %}
+
+<!-- Navbar -->
+{% include 'fragments/navbar.html' %}
+
+<div class="page-hero">
+    <div class="container">
+        <div class="d-flex align-items-center">
+            {% if team.icon %}
+            <i class="fas {{ team.icon }} fa-4x text-gold me-4"></i>
+            {% endif %}
+            <div>
+                <h1 class="display-3 fw-bold">{{ team.name }}</h1>
+                {% if team.team_lead %}
+                <p class="lead fs-5">Led by: <strong>{{ team.team_lead }}</strong></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                {% if team.description %}
+                <div class="info-card mb-4">
+                    <h2 class="text-gold mb-3">About</h2>
+                    <p class="fs-5">{{ team.description }}</p>
+                </div>
+                {% endif %}
+
+                <div class="info-card">
+                    <h2 class="text-gold mb-4">
+                        Team Members 
+                        <span class="badge bg-gold text-dark">{{ team.members|length }}</span>
+                    </h2>
+                    
+                    {% if team.members %}
+                    <div class="row">
+                        {% for member in team.members %}
+                        {% if member.status == 'Active' %}
+                        <div class="col-md-6 mb-3">
+                            <div class="p-3 border rounded" style="border-color: #FFD700 !important;">
+                                <h5 class="text-gold">{{ member.full_name }}</h5>
+                                {% if member.role %}
+                                <p class="mb-1"><strong>Role:</strong> {{ member.role }}</p>
+                                {% endif %}
+                                {% if member.department %}
+                                <p class="mb-1"><strong>Department:</strong> {{ member.department }}</p>
+                                {% endif %}
+                                {% if member.email %}
+                                <p class="mb-0"><strong>Email:</strong> <a href="mailto:{{ member.email }}">{{ member.email }}</a></p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No members in this team yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center py-5">
+    <a href="{{ url_for('list_teams') }}" class="btn-gold btn-lg">Back to Teams</a>
+</div>
+
+<!-- Footer -->
+{% include 'fragments/footer.html' %}
+</body>
+</html>

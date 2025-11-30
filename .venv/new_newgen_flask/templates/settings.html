@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'fragments/header.html' %}
+    <title>{{ app_name }} - Settings</title>
+    <style>
+        .settings-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .settings-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .settings-menu {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .settings-menu-item {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+        }
+
+        .settings-menu-item:hover {
+            background: rgba(255, 215, 0, 0.08);
+            transform: translateX(5px);
+        }
+
+        .settings-menu-item.active {
+            background: var(--nec-gold);
+            color: var(--nec-blue);
+        }
+
+        .theme-light .settings-menu {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 31, 63, 0.2);
+        }
+
+        .settings-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.35);
+            border-radius: 18px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-light .settings-card {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(0, 31, 63, 0.15);
+            box-shadow: 0 4px 15px rgba(0, 31, 63, 0.08);
+        }
+
+        .settings-card h3 {
+            color: var(--nec-gold);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .settings-field {
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-field label {
+            font-weight: 600;
+            color: var(--nec-gold);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        /* Base compact theme box */
+.theme-preview {
+    width: auto !important;
+    min-height: auto !important;
+    padding: 10px 22px !important;
+    border-radius: 14px !important;       /* Matches roundness */
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 10px !important;                 /* Space between icon + text */
+    flex-direction: row !important;
+    cursor: pointer;
+    transition: 0.2s ease;
+    border: 2px solid transparent !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15) !important;
+}
+
+/* Remove tall box & vertical layout */
+.theme-preview-content {
+    text-align: left !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+    width: auto !important;
+    margin: 0 !important;
+}
+
+/* Icon size EXACT like your second image */
+.theme-preview-content i {
+    font-size: 1.35rem !important;
+    margin: 0 !important;
+}
+
+/* Only title text */
+.theme-preview-content .fw-bold {
+    font-size: 1rem !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+}
+
+/* Remove small description text */
+.theme-preview-content small {
+    display: none !important;
+}
+
+/* Dark mode tile */
+.theme-dark-preview {
+    background: #0b3a58 !important;     /* Matches your screenshot */
+    color: white !important;
+}
+
+/* Light mode tile */
+.theme-light-preview {
+    background: #fafafa !important;      /* Matches light tile */
+    color: #222 !important;
+}
+
+/* Hover effect (small lift) */
+.theme-preview:hover {
+    transform: translateY(-3px) !important;
+}
+
+/* Active / selected */
+.theme-preview.active {
+    border-color: var(--nec-gold) !important;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6) !important;
+}
+
+/* Checkmark position */
+.theme-preview.active::after {
+    top: -8px !important;
+    right: -8px !important;
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 0.85rem !important;
+}
+
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .info-item {
+            padding: 1.2rem;
+            background: rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            border-left: 4px solid var(--nec-gold);
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            background: rgba(0, 0, 0, 0.12);
+            transform: translateX(5px);
+        }
+
+        .theme-light .info-item {
+            background: rgba(0, 31, 63, 0.05);
+        }
+
+        .info-item strong {
+            color: var(--nec-gold);
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .info-item span {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .badge-active {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+        }
+
+        .badge-inactive {
+            background: linear-gradient(135deg, #dc3545, #e83e8c);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+        }
+
+        /* Settings section management */
+        .settings-section {
+            display: none;
+        }
+        
+        .settings-section.active {
+            display: block;
+        }
+
+        /* Centered page hero */
+        .page-hero {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .page-hero .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-hero .d-flex {
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .settings-container {
+                max-width: 100%;
+            }
+
+            .settings-card {
+                padding: 1.5rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-sidebar {
+                top: 90px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .settings-sidebar {
+                position: static;
+                margin-bottom: 2rem;
+                top: auto;
+            }
+
+            .settings-card {
+                padding: 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .settings-card h3 {
+                font-size: 1.2rem;
+                gap: 0.4rem;
+            }
+
+            .settings-card h3 i {
+                font-size: 1.1rem;
+            }
+
+            .theme-preview {
+                padding: 1.3rem;
+                min-height: 180px;
+            }
+
+            .theme-preview-content i {
+                font-size: 2.5rem;
+            }
+
+            .settings-field {
+                margin-bottom: 1rem;
+            }
+
+            .info-item {
+                padding: 0.9rem;
+            }
+
+            .info-item strong {
+                font-size: 0.9rem;
+            }
+
+            .settings-menu-item {
+                padding: 0.9rem 1.2rem;
+                font-size: 0.95rem;
+            }
+
+            .btn-gold,
+            .btn {
+                padding: 0.6rem 1.2rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .settings-container {
+                padding: 0 0.8rem;
+            }
+
+            .settings-card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+                border-radius: 12px;
+            }
+
+            .settings-card h3 {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+                padding-bottom: 0.7rem;
+            }
+
+            .settings-card h3 i {
+                font-size: 0.95rem;
+            }
+
+            .settings-menu-item {
+                padding: 0.75rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            .theme-preview {
+                padding: 0.9rem;
+                margin-bottom: 0.8rem;
+                border-radius: 12px;
+                min-height: 160px;
+            }
+
+            .theme-preview-content i {
+                font-size: 2rem;
+            }
+
+            .theme-preview-content .fw-bold {
+                font-size: 1rem;
+            }
+
+            .theme-preview-content small {
+                font-size: 0.75rem;
+            }
+
+            .info-grid {
+                gap: 0.8rem;
+            }
+
+            .info-item {
+                padding: 0.7rem;
+                border-left-width: 3px;
+            }
+
+            .info-item strong {
+                font-size: 0.8rem;
+            }
+
+            .info-item span {
+                font-size: 0.85rem;
+            }
+
+            .btn-gold,
+            .btn {
+                width: 100% !important;
+                margin-bottom: 0.5rem;
+                padding: 0.5rem 1rem !important;
+                font-size: 0.9rem;
+            }
+
+            .badge-active,
+            .badge-inactive {
+                padding: 0.35rem 0.7rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .settings-card {
+                padding: 0.8rem;
+            }
+
+            .settings-card h3 {
+                font-size: 0.95rem;
+            }
+
+            .settings-card h3 i {
+                font-size: 0.85rem;
+            }
+
+            .info-item {
+                padding: 0.6rem;
+            }
+
+            .settings-menu-item {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .theme-preview {
+                min-height: 150px;
+            }
+        }
+
+        /* Laptop/Large Screen Optimization */
+        @media (min-width: 1200px) {
+            .settings-container {
+                max-width: 1100px;
+            }
+
+            .settings-card {
+                padding: 2.5rem;
+            }
+
+            .settings-card h3 {
+                font-size: 1.35rem;
+            }
+
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .settings-field {
+                margin-bottom: 2rem;
+            }
+
+            .theme-preview {
+                padding: 2.5rem;
+                min-height: 220px;
+            }
+
+            .settings-menu-item {
+                padding: 1.2rem 1.8rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="{{ theme_class }}">
+
+<!-- Background Animation -->
+{% include 'fragments/animation.html' %}
+
+<!-- Navbar -->
+{% include 'fragments/navbar.html' %}
+
+<div class="page-hero">
+    <div class="container">
+        <div class="d-flex align-items-center gap-3">
+            <i class="fas fa-sliders-h text-gold" style="font-size: 2.5rem;"></i>
+            <div>
+                <h1 class="display-3 fw-bold mb-0">Settings</h1>
+                <p class="lead fs-4 mb-0 mt-2">Customize Your NEC NewGen Experience</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content-section">
+    <div class="settings-container container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages mb-4">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show">
+                            <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'error' %}exclamation-triangle{% else %}info-circle{% endif %} me-2"></i>
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="row">
+            <!-- Sidebar Navigation -->
+            <div class="col-lg-3 col-md-4 mb-4 mb-lg-0">
+                <div class="settings-menu">
+                    <a href="#theme" class="settings-menu-item active" data-section="theme">
+                        <i class="fas fa-palette me-2"></i>Theme Settings
+                    </a>
+                    <a href="#user" class="settings-menu-item" data-section="user">
+                        <i class="fas fa-user me-2"></i>User Information
+                    </a>
+                    <a href="#system" class="settings-menu-item" data-section="system">
+                        <i class="fas fa-server me-2"></i>System Status
+                    </a>
+                    <a href="#app" class="settings-menu-item" data-section="app">
+                        <i class="fas fa-info-circle me-2"></i>Application Info
+                    </a>
+                    {% if current_user.is_authenticated %}
+                    <a href="#actions" class="settings-menu-item" data-section="actions">
+                        <i class="fas fa-bolt me-2"></i>Quick Actions
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-9 col-md-8">
+                <!-- Theme Settings -->
+                <div id="theme" class="settings-section active">
+                    <div class="settings-card">
+                        <h3><i class="fas fa-palette me-2"></i>Theme Settings</h3>
+                        <div class="settings-field">
+                            <label>Select Your Preferred Theme</label>
+                            <form action="{{ url_for('settings') }}" method="post">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="theme-preview theme-dark-preview" 
+                                             onclick="selectTheme('dark')" 
+                                             id="darkThemePreview">
+                                            <div class="theme-preview-content">
+                                                <i class="fas fa-moon"></i>
+                                                <div class="fw-bold">Dark Mode</div>
+                                                <small>Professional & Easy on Eyes</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="theme-preview theme-light-preview" 
+                                             onclick="selectTheme('light')" 
+                                             id="lightThemePreview">
+                                            <div class="theme-preview-content">
+                                                <i class="fas fa-sun"></i>
+                                                <div class="fw-bold">Light Mode</div>
+                                                <small>Bright & Clean Design</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="themeMode" name="theme" value="{{ theme_mode }}">
+                                <button type="submit" class="btn-gold w-100 mt-3">
+                                    <i class="fas fa-save me-2"></i>Save Theme Settings
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Information -->
+                <div id="user" class="settings-section">
+                    <div class="settings-card">
+                        <h3><i class="fas fa-user me-2"></i>User Information</h3>
+                        <div class="info-grid">
+                            {% if current_user.is_authenticated %}
+                                <div class="info-item">
+                                    <strong>Username</strong>
+                                    <span>{{ current_user.username }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>User Role</strong>
+                                    <span class="text-capitalize">{{ current_user.role }}</span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Account Status</strong>
+                                    <span><span class="badge badge-active">Active</span></span>
+                                </div>
+                                <div class="info-item">
+                                    <strong>Member Since</strong>
+                                    <span>{{ current_user.created_at.strftime('%d-%b-%Y') if current_user.created_at else 'N/A' }}</span>
+                                </div>
+                            {% else %}
+                                <div class="info-item" style="grid-column: 1/-1;">
+                                    <strong>Not Logged In</strong>
+                                    <p class="mt-2">
+                                        <a href="{{ url_for('login') }}" class="btn-gold btn-sm">
+                                            <i class="fas fa-sign-in-alt me-1"></i>Login
+                                        </a>
+                                    </p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Status -->
+                <div id="system" class="settings-section">
+                    <div class="settings-card">
+                        <h3><i class="fas fa-server me-2"></i>System Status</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <strong>Database Status</strong>
+                                <span><span class="badge badge-active">Connected</span></span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Authentication</strong>
+                                <span><span class="badge badge-active">Enabled</span></span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Total Teams</strong>
+                                <span class="text-gold fw-bold">{{ teams|length if teams else '0' }}</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Total Members</strong>
+                                <span class="text-gold fw-bold">{{ total_members if total_members else '0' }}</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Server Status</strong>
+                                <span><span class="badge badge-active">Running</span></span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Theme System</strong>
+                                <span><span class="badge badge-active">Active</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Application Info -->
+                <div id="app" class="settings-section">
+                    <div class="settings-card">
+                        <h3><i class="fas fa-info-circle me-2"></i>Application Information</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <strong>Application Name</strong>
+                                <span>{{ app_name }} NewGen</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Version</strong>
+                                <span>1.0.0</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Framework</strong>
+                                <span>Flask</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Database</strong>
+                                <span>PostgreSQL</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Python Version</strong>
+                                <span>3.8+</span>
+                            </div>
+                            <div class="info-item">
+                                <strong>Environment</strong>
+                                <span>Development</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                {% if current_user.is_authenticated %}
+                <div id="actions" class="settings-section">
+                    <div class="settings-card">
+                        <h3><i class="fas fa-bolt me-2"></i>Quick Actions</h3>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <a href="{{ url_for('add_person') }}" class="btn-gold w-100">
+                                    <i class="fas fa-user-plus me-2"></i>Add New Member
+                                </a>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <a href="{{ url_for('team_members_combined') }}" class="btn btn-outline-light w-100">
+                                    <i class="fas fa-users me-2"></i>View Teams & Members
+                                </a>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <a href="{{ url_for('add_team') }}" class="btn btn-outline-light w-100">
+                                    <i class="fas fa-layer-group me-2"></i>Add New Team
+                                </a>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <form action="{{ url_for('logout') }}" method="post" class="w-100">
+                                    <button type="submit" class="btn btn-outline-danger w-100">
+                                        <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center py-5">
+    <a href="{{ url_for('home') }}" class="btn-gold btn-lg">Back to Home</a>
+</div>
+
+<!-- Footer -->
+{% include 'fragments/footer.html' %}
+
+<script>
+    function selectTheme(mode) {
+        document.getElementById('themeMode').value = mode;
+        
+        // Update preview highlights
+        document.querySelectorAll('.theme-preview').forEach(preview => {
+            preview.classList.remove('active');
+        });
+        
+        if (mode === 'dark') {
+            document.getElementById('darkThemePreview').classList.add('active');
+        } else {
+            document.getElementById('lightThemePreview').classList.add('active');
+        }
+    }
+
+    // Initialize settings page
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set initial active theme preview
+        const currentTheme = '{{ theme_mode }}';
+        selectTheme(currentTheme);
+
+        // Set up section switching
+        const menuItems = document.querySelectorAll('.settings-menu-item');
+        const sections = document.querySelectorAll('.settings-section');
+        
+        menuItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Get target section
+                const targetSection = this.getAttribute('data-section');
+                
+                // Update active menu item
+                menuItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show target section, hide others
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                const targetElement = document.getElementById(targetSection);
+                if (targetElement) {
+                    targetElement.classList.add('active');
+                }
+                
+                // Smooth scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Auto-hide flash messages after 5 seconds
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            }, 5000);
+        });
+    });
+</script>
+</body>
+</html>

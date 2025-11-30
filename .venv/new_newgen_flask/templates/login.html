@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'fragments/header.html' %}
+    <title>{{ app_name }} - Login</title>
+</head>
+<body class="{{ theme_class }} login-body">
+
+<!-- Background Animation -->
+<div class="vertex-animation-bg" id="vertexBg"></div>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="login-container text-center">
+                <div class="login-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1 class="nec-logo mb-4">NEC NewGen</h1>
+                <h4 class="mb-4">Administrator Login</h4>
+
+                <!-- Flash Messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show">
+                                <i class="fas fa-{% if category == 'success' %}check-circle{% elif category == 'error' %}exclamation-triangle{% else %}info-circle{% endif %} me-2"></i>
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form action="{{ url_for('login') }}" method="post">
+                    <div class="mb-3">
+                        <input type="text" name="username" class="form-control mb-3"
+                               placeholder="Username" required autocomplete="username">
+                    </div>
+                    <div class="mb-4">
+                        <input type="password" name="password" class="form-control mb-3"
+                               placeholder="Password" required autocomplete="current-password">
+                    </div>
+                    <button type="submit" class="btn-gold mb-4">
+                        <i class="fas fa-sign-in-alt me-2"></i>Login
+                    </button>
+                </form>
+
+                <div class="border-top pt-3">
+                    <small class="text-muted">
+                        <strong>Default Credentials:</strong><br>
+                        Username: <code>admin</code> | Password: <code>nec123</code>
+                    </small>
+                </div>
+
+                <div class="mt-3">
+                    <a href="{{ url_for('home') }}" class="text-gold text-decoration-none">
+                        <i class="fas fa-arrow-left me-1"></i>Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-hide flash messages after 5 seconds
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            setTimeout(() => {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            }, 5000);
+        });
+
+        // Focus on username field
+        const usernameField = document.querySelector('input[name="username"]');
+        if (usernameField) {
+            usernameField.focus();
+        }
+    });
+</script>
+    <script src="{{ url_for('static', filename='js/animation.js') }}"></script>
+</body>
+</html>

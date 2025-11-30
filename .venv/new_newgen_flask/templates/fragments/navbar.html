@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg navbar-dark nav-custom fixed-top">
+    <div class="container">
+        <a class="navbar-brand nec-logo" href="{{ url_for('home') }}">
+            <i class="fas fa-graduation-cap me-2"></i>{{ app_name }}
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link {% if request.endpoint == 'home' %}active{% endif %}" href="{{ url_for('home') }}">
+                    <i class="fas fa-home me-1"></i>Home
+                </a>
+                <a class="nav-link {% if request.endpoint == 'about' %}active{% endif %}" href="{{ url_for('about') }}">
+                    <i class="fas fa-info-circle me-1"></i>About
+                </a>
+                <a class="nav-link {% if request.endpoint == 'services' %}active{% endif %}" href="{{ url_for('services') }}">
+                    <i class="fas fa-cogs me-1"></i>Services
+                </a>
+                <a class="nav-link {% if request.endpoint == 'contact' %}active{% endif %}" href="{{ url_for('contact') }}">
+                    <i class="fas fa-envelope me-1"></i>Contact
+                </a>
+                <a class="nav-link {% if request.endpoint == 'list_persons' or request.endpoint == 'team_members_combined' %}active{% endif %}" href="{{ url_for('team_members_combined') }}">
+                    <i class="fas fa-users me-1"></i>Teams & Members
+                </a>
+                <a class="nav-link {% if request.endpoint == 'settings' %}active{% endif %}" href="{{ url_for('settings') }}">
+                    <i class="fas fa-cog me-1"></i>Settings
+                </a>
+
+                {% if current_user.is_authenticated %}
+                    <form action="{{ url_for('logout') }}" method="post" class="d-inline">
+                        <button type="submit" class="nav-link btn btn-link border-0 p-0">
+                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        </button>
+                    </form>
+                {% else %}
+                    <a class="nav-link" href="{{ url_for('login') }}">
+                        <i class="fas fa-sign-in-alt me-1"></i>Login
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>

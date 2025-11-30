@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'fragments/header.html' %}
+    <title>{{ app_name }} - Add Member</title>
+    <style>
+        .form-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 2.5rem;
+        }
+
+        .theme-light .form-container {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 31, 63, 0.2);
+        }
+
+        .required-field::after {
+            content: " *";
+            color: #e74c3c;
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: white;
+            border-radius: 10px;
+            padding: 12px 15px;
+        }
+
+        .theme-light .form-control {
+            background: #fff;
+            border-color: #ced4da;
+            color: #333;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--nec-gold);
+            color: white;
+            box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25);
+        }
+
+        .theme-light .form-control:focus {
+            background: #fff;
+            border-color: var(--nec-gold);
+            color: #333;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .theme-light .form-control::placeholder {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body class="{{ theme_class }}">
+
+<!-- Background Animation -->
+<div class="vertex-animation-bg" id="vertexBg"></div>
+
+<!-- Navigation -->
+{% include 'fragments/navbar.html' %}
+
+<div class="page-hero">
+    <div class="container">
+        <h1 class="display-4 fw-bold">Add New Team Member</h1>
+        <p class="lead fs-4">Add faculty or staff member to NEC NewGen</p>
+    </div>
+</div>
+
+<div class="content-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="form-container">
+                    <!-- Flash Messages -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                {% if category == 'error' %}
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <form action="{{ url_for('add_person') }}" method="post">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="firstName" class="form-label required-field">First Name</label>
+                                <input type="text" id="firstName" name="firstName"
+                                       class="form-control" required placeholder="Enter first name">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="lastName" class="form-label required-field">Last Name</label>
+                                <input type="text" id="lastName" name="lastName"
+                                       class="form-control" required placeholder="Enter last name">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label required-field">Email Address</label>
+                            <input type="email" id="email" name="email"
+                                   class="form-control" required placeholder="Enter email address">
+                            <div class="form-text" style="color: rgba(255,255,255,0.7);">
+                                Use official NEC email format: name@nec.edu.in
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" id="phone" name="phone"
+                                       class="form-control" placeholder="+91-9876543210">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="joinDate" class="form-label">Join Date</label>
+                                <input type="date" id="joinDate" name="joinDate"
+                                       class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="role" class="form-label required-field">Role</label>
+                                <select id="role" name="role" class="form-select" required>
+                                    <option value="">Select a role</option>
+                                    <option value="Professor">Professor</option>
+                                    <option value="Associate Professor">Associate Professor</option>
+                                    <option value="Assistant Professor">Assistant Professor</option>
+                                    <option value="Head of Department">Head of Department</option>
+                                    <option value="Lab Instructor">Lab Instructor</option>
+                                    <option value="Research Scholar">Research Scholar</option>
+                                    <option value="Administrative Staff">Administrative Staff</option>
+                                    <option value="Technical Staff">Technical Staff</option>
+                                    <option value="Student Lead">Student Lead</option>
+                                    <option value="Student Member">Student Member</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="department" class="form-label required-field">Department</label>
+                                <select id="department" name="department" class="form-select" required>
+                                    <option value="">Select a department</option>
+                                    <option value="Computer Science">Computer Science & Engineering</option>
+                                    <option value="Information Technology">Information Technology</option>
+                                    <option value="Electronics">Electronics & Communication</option>
+                                    <option value="Electrical">Electrical & Electronics</option>
+                                    <option value="Mechanical">Mechanical Engineering</option>
+                                    <option value="Civil">Civil Engineering</option>
+                                    <option value="AI & Data Science">AI & Data Science</option>
+                                    <option value="Science & Humanities">Science & Humanities</option>
+                                    <option value="Administration">Administration</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <select id="status" name="status" class="form-select">
+                                    <option value="Active">Active</option>
+                                    <option value="Inactive">Inactive</option>
+                                    <option value="On Leave">On Leave</option>
+                                    <option value="Graduated">Graduated</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="team_id" class="form-label">Team</label>
+                                <select id="team_id" name="team_id" class="form-select">
+                                    <option value="">Select a team (optional)</option>
+                                    {% for team in teams %}
+                                    <option value="{{ team.id }}">{{ team.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4 pt-3 border-top border-gold">
+                            <a href="{{ url_for('list_persons') }}" class="btn btn-outline-light">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Members
+                            </a>
+                            <button type="submit" class="btn-gold">
+                                <i class="fas fa-user-plus me-2"></i>Add Member
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+{% include 'fragments/footer.html' %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set today's date as default for join date
+        const joinDateField = document.getElementById('joinDate');
+        if (joinDateField && !joinDateField.value) {
+            const today = new Date().toISOString().split('T')[0];
+            joinDateField.value = today;
+        }
+
+        // Form validation
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            const requiredFields = form.querySelectorAll('[required]');
+            let valid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    valid = false;
+                    field.classList.add('is-invalid');
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+
+            if (!valid) {
+                e.preventDefault();
+                // Scroll to first invalid field
+                const firstInvalid = form.querySelector('.is-invalid');
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstInvalid.focus();
+                }
+            }
+        });
+
+        // Remove invalid class when user starts typing
+        const inputs = form.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                this.classList.remove('is-invalid');
+            });
+        });
+    });
+</script>
+</body>
+</html>
